@@ -1,6 +1,6 @@
 # PostgreSQL baza podataka
 
-Deployment baze podataka zahteva da je [PostgreSQL Operator (PGO) deployovan][../pgo].
+Deployment baze podataka zahteva da je [PostgreSQL Operator (PGO) deployovan](../pgo).
 
 Ova instanca baze podataka ima:
   - 3 baze podataka — user (za user-service), berza (za berza-service) i racun
@@ -14,6 +14,15 @@ Takođe, deployovan je i pgBackRest koji služi za backpovanje baze podataka.
 Operator koristi default StorageClass za pravljenje volume-a/PVC-ova. Svaka
 replika koristi volume od 1GB (uključujući i pgBackRest servis).
 
+## Deployment instance
+
+PostgreSQL može da se deployuje koristeći sledeću `kubectl` komandu:
+
+```shell
+kubectl apply -f clusters/elab/database
+```
+
+Instance će biti deployovane u `banka-pgo` namespace.
 ## Pristup bazi preko Kubernetes-a
 
 PGO automatski kreira nekoliko servisa. Jednostavnosti radi, možete koristiti
