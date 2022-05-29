@@ -1,0 +1,8 @@
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: postgres-operator-upgrade
+  namespace: banka-pgo
+  labels:
+    postgres-operator.crunchydata.com/control-plane: postgres-operator-upgrade
