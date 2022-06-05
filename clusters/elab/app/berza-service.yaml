@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: berza-service
+  name: berza-service
+  namespace: banka-dev
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: berza-service
+  template:
+    metadata:
+      labels:
+        app: berza-service
+    spec:
+      containers:
+      - image: ghcr.io/raf-si-2021/banka-berza:latest
+        name: banka-berza-service
+        imagePullPolicy: Always
+        resources: 
+          limits:
+            cpu: 1
+            memory: 1Gi
+        env:
+          - name: 'spring.datasource.hikari.jdbcUrl'
+            value: 'jdbc:postgresql://banka-pgbouncer:5432/berza'
+          - name: 'spring.datasource.hikari.username'
+            value: 'admin'
+          - name: 'spring.datasource.hikari.password'
+            valueFrom: 
+              secretKeyRef: 
+                name: banka-pguser-admin
+                key: password
+                optional: false
+          - name: 'berza.influxscrapper.endpoint' 
+            value: 'http://influx-scrapper/'
+          - name: 'berza.berze.csv' 
+            value: 'berze.csv'
+          - name: 'berza.inflacije.csv' 
+            value: 'inflacije.csv'
+          - name: 'berza.user-service-url'
+            value: 'http://user-service:8080/api/user'
+            
