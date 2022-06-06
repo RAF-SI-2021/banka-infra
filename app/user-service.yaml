@@ -1,0 +1,74 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-service
+  namespace: banka-dev
+  labels:
+    app: user-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: user-service
+  template:
+    metadata:
+      labels:
+        app: user-service
+    spec:
+      containers:
+        - image: ghcr.io/raf-si-2021/banka-user-service:latest
+          name: banka-user-service
+          imagePullPolicy: Always
+          resources: 
+            limits:
+              cpu: "1"
+              memory: 1Gi
+          ports:
+            - name: user-service
+              containerPort: 8080
+          env:
+            - name: "spring.datasource.hikari.jdbcUrl"
+              value: "jdbc:postgresql://banka-pgbouncer:5432/user"
+            - name: "spring.datasource.hikari.username"
+              valueFrom: 
+                secretKeyRef: 
+                  name: banka-pguser-admin
+                  key: user
+                  optional: false
+            - name: "spring.datasource.hikari.password"
+              valueFrom: 
+                secretKeyRef: 
+                  name: banka-pguser-admin
+                  key: password
+                  optional: false 
+            - name: "spring.jpa.hibernate.ddl-auto"
+              value: "update"
+            - name: "spring.activemq.broker-url"
+              value: "tcp://activemq:61616"
+            - name: "spring.activemq.user"
+              valueFrom:
+                secretKeyRef:
+                  name: "activemq-creds"
+                  key: username
+                  optional: false
+            - name: "spring.activemq.password"
+              valueFrom:
+                secretKeyRef:
+                  name: "activemq-creds"
+                  key: password
+                  optional: false
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: user-service
+  namespace: banka-dev
+  labels:
+    app: user-service
+spec:
+  selector:
+    app: user-service
+  ports:
+    - port: 8080
+      protocol: TCP
+      targetPort: user-service
