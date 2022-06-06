@@ -33,7 +33,7 @@ spec:
               valueFrom: 
                 secretKeyRef: 
                   name: banka-pguser-admin
-                  key: username
+                  key: user
                   optional: false
             - name: "spring.datasource.hikari.password"
               valueFrom: 
