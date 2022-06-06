@@ -1,0 +1,68 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: berza-service
+  namespace: banka-dev
+  labels:
+    app: berza-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: berza-service
+  template:
+    metadata:
+      labels:
+        app: berza-service
+    spec:
+      containers:
+        - image: ghcr.io/raf-si-2021/banka-berza:latest
+          name: banka-berza-service
+          imagePullPolicy: Always
+          resources: 
+            limits:
+              cpu: "1"
+              memory: 1Gi
+          ports:
+            - name: berza-service
+              containerPort: 8082
+          env:
+            - name: "spring.datasource.hikari.jdbcUrl"
+              value: "jdbc:postgresql://banka-pgbouncer:5432/berza"
+            - name: "spring.datasource.hikari.username"
+              valueFrom: 
+                secretKeyRef: 
+                  name: banka-pguser-admin
+                  key: username
+                  optional: false
+            - name: "spring.datasource.hikari.password"
+              valueFrom: 
+                secretKeyRef: 
+                  name: banka-pguser-admin
+                  key: password
+                  optional: false
+            - name: "spring.jpa.hibernate.ddl-auto"
+              value: "update"
+            - name: "berza.influxscrapper.endpoint" 
+              value: "http://influx-scrapper/"
+            - name: "berza.user-service-url"
+              value: "http://user-service:8080/api/user"
+            - name: "berza.berze.csv" 
+              value: "berze.csv"
+            - name: "berza.inflacije.csv" 
+              value: "inflacije.csv"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: berza-service
+  namespace: banka-dev
+  labels:
+    app: berza-service
+spec:
+  selector:
+    app: berza-service
+  ports:
+    - port: 8082
+      protocol: TCP
+      targetPort: berza-service

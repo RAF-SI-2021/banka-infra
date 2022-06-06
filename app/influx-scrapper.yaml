@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: influx-scrapper
+  name: influx-scrapper
+  namespace: banka-dev
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: influx-scrapper
+  template:
+    metadata:
+      labels:
+        app: influx-scrapper
+    spec:
+      containers:
+        - image: ghcr.io/raf-si-2021/banka-influx-scrapper:latest
+          name: banka-influx-scrapper
+          imagePullPolicy: Always
+          resources:
+            limits:
+              cpu: "1"
+              memory: 1Gi
+          ports:
+            - name: http
+              containerPort: 80
+          env:
+            - name: "INFLUX_DB_URL"
+              value: "http://banka-dev-influx-influxdb2/"
+            - name: "ALPHAVANTAGE_TOKEN"
+              valueFrom:
+                secretKeyRef:
+                  name: api-creds
+                  key: alphavantage
+                  optional: false
+            - name: "NASDAQ_API_KEY"
+              valueFrom:
+                secretKeyRef:
+                  name: api-creds
+                  key: nasdaq
+                  optional: false
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: influx-scrapper
+  namespace: banka-dev
+  labels:
+    app: influx-scrapper
+spec:
+  selector:
+    app: influx-scrapper
+  ports:
+    - port: 80
+      protocol: TCP
+      targetPort: http

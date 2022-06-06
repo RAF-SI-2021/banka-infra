@@ -1,0 +1,7 @@
+adminUser:
+  organization: "raf"
+  bucket: "stocks"
+  user: "raf"
+  retention_policy: "0s"
+  password: "12345678"
+  token: "mytoken"
