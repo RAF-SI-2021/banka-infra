@@ -4,7 +4,7 @@ metadata:
   labels:
     app: influx-scrapper
   name: influx-scrapper
-  namespace: banka-dev
+  namespace: NAMESPACE
 spec:
   replicas: 1
   selector:
@@ -28,7 +28,7 @@ spec:
               containerPort: 80
           env:
             - name: "INFLUX_DB_URL"
-              value: "http://banka-dev-influx-influxdb2/"
+              value: "http://influx-influxdb2/"
             - name: "ALPHAVANTAGE_TOKEN"
               valueFrom:
                 secretKeyRef:
@@ -46,7 +46,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: influx-scrapper
-  namespace: banka-dev
+  namespace: NAMESPACE
   labels:
     app: influx-scrapper
 spec:

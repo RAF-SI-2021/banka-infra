@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: user-service
-  namespace: banka-dev
+  namespace: NAMESPACE
   labels:
     app: user-service
 spec:
@@ -62,7 +62,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: user-service
-  namespace: banka-dev
+  namespace: NAMESPACE
   labels:
     app: user-service
 spec:

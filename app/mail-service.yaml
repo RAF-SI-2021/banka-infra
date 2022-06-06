@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: mail-service
-  namespace: banka-dev
+  namespace: NAMESPACE
   labels:
     app: mail-service
 spec:
@@ -46,7 +46,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: mail-service
-  namespace: banka-dev
+  namespace: NAMESPACE
   labels:
     app: mail-service
 spec:

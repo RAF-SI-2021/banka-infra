@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: activemq-creds
-  namespace: banka-dev
+  namespace: NAMESPACE
 type: Opaque
 stringData:
   username: banka
@@ -12,7 +12,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: activemq
-  namespace: banka-dev
+  namespace: NAMESPACE
   labels:
     app: activemq
 spec:
@@ -53,7 +53,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: activemq
-  namespace: banka-dev
+  namespace: NAMESPACE
   labels:
     app: activemq
 spec:
