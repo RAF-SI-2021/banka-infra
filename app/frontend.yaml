@@ -20,8 +20,13 @@ spec:
           name: banka-frontend
           imagePullPolicy: Always
           command:
-            - npm
-            - start
+            - /bin/sh
+            - -c
+          args:
+            - |-
+              find /usr/app/src \( -type d -name .git -prune \) -o -type f -print0 | xargs -0 sed -i 's/http:\/\/localhost:8080/https:\/\/user-svc\.dev\.banka\.raf\.xmudrii\.com:31815/g'
+              find /usr/app/src \( -type d -name .git -prune \) -o -type f -print0 | xargs -0 sed -i 's/http:\/\/localhost:8082/https:\/\/berza-svc\.dev\.banka\.raf\.xmudrii\.com:31815/g'
+              npm start
           resources: 
             limits:
               cpu: "1"

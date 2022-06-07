@@ -1,0 +1,45 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: banka-ingress
+  namespace: NAMESPACE
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+spec:
+  tls:
+    - hosts:
+        - dev.banka.raf.xmudrii.com
+        - user-svc.dev.banka.raf.xmudrii.com
+        - berza-svc.dev.banka.raf.xmudrii.com
+      secretName: xmudrii-com-certs
+  rules:
+  - host: "dev.banka.raf.xmudrii.com"
+    http:
+      paths:
+        - pathType: Prefix
+          path: "/"
+          backend:
+            service:
+              name: frontend
+              port:
+                number: 80
+  - host: "user-svc.dev.banka.raf.xmudrii.com"
+    http:
+      paths:
+        - pathType: Prefix
+          path: "/"
+          backend:
+            service:
+              name: user-service
+              port:
+                number: 8080
+  - host: "berza-svc.dev.banka.raf.xmudrii.com"
+    http:
+      paths:
+        - pathType: Prefix
+          path: "/"
+          backend:
+            service:
+              name: berza-service
+              port:
+                number: 8082
