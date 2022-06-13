@@ -44,9 +44,17 @@ spec:
             - name: "spring.jpa.hibernate.ddl-auto"
               value: "update"
             - name: "racun.user-service-url"
+              value: "http://user-service:8080/api/limit-change"
+            - name: "racun.user-service-url2"
               value: "http://user-service:8080/api/user"
             - name: "racun.forex-quote-url"
               value: "http://berza-service:8082/api/forex/podaci"
+            - name: "racun.akcije-quote-url"
+              value: "http://berza-service:8082/api/akcije/podaci/id/"
+            - name: "racun.futures-quote-url"
+              value: "http://berza-service:8082/api/futures/podaci/id/"
+            - name: "racun.berzaById-url"
+              value: "http://berza-service:8082/api/berza/id/"
 ---
 apiVersion: v1
 kind: Service
