@@ -42,7 +42,7 @@ spec:
                   key: password
                   optional: false
             - name: "spring.jpa.hibernate.ddl-auto"
-              value: "create-drop"
+              value: "update"
             - name: "berza.influxscrapper.endpoint" 
               value: "http://influx-scrapper/"
             - name: "berza.user-service-url"
