@@ -11,6 +11,7 @@ spec:
         - dev.banka.raf.xmudrii.com
         - user-svc.dev.banka.raf.xmudrii.com
         - berza-svc.dev.banka.raf.xmudrii.com
+        - racun-svc.dev.banka.raf.xmudrii.com
       secretName: xmudrii-com-certs
   rules:
   - host: "dev.banka.raf.xmudrii.com"
@@ -43,3 +44,13 @@ spec:
               name: berza-service
               port:
                 number: 8082
+  - host: "racun-svc.dev.banka.raf.xmudrii.com"
+    http:
+      paths:
+        - pathType: Prefix
+          path: "/"
+          backend:
+            service:
+              name: racun-service
+              port:
+                number: 8083
