@@ -51,6 +51,12 @@ spec:
               value: "berze.csv"
             - name: "berza.inflacije.csv" 
               value: "inflacije.csv"
+            - name: "berza.alphavantage.apikey"
+              valueFrom:
+                secretKeyRef:
+                  name: api-creds
+                  key: alphavantage
+                  optional: false
 ---
 apiVersion: v1
 kind: Service
