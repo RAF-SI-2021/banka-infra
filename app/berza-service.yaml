@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: berza-service
-  namespace: NAMESPACE
+  namespace: banka-test
   labels:
     app: berza-service
 spec:
@@ -21,14 +21,14 @@ spec:
           imagePullPolicy: Always
           resources: 
             limits:
-              cpu: "1"
-              memory: 1Gi
+              cpu: "500m"
+              memory: 700Mi
           ports:
             - name: berza-service
               containerPort: 8082
           env:
             - name: "spring.datasource.hikari.jdbcUrl"
-              value: "jdbc:postgresql://banka-pgbouncer:5432/berza"
+              value: "jdbc:postgresql://banka-primary:5432/berza"
             - name: "spring.datasource.hikari.username"
               valueFrom: 
                 secretKeyRef: 
@@ -64,7 +64,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: berza-service
-  namespace: NAMESPACE
+  namespace: banka-test
   labels:
     app: berza-service
 spec:

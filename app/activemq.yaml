@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: activemq-creds
-  namespace: NAMESPACE
+  namespace: banka-test
 type: Opaque
 stringData:
   username: banka
@@ -12,7 +12,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: activemq
-  namespace: NAMESPACE
+  namespace: banka-test
   labels:
     app: activemq
 spec:
@@ -30,7 +30,7 @@ spec:
           name: activemq-artemis
           resources:
             limits:
-              cpu: 500m
+              cpu: 300m
               memory: 256Mi
           ports:
             - name: activemq
@@ -53,7 +53,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: activemq
-  namespace: NAMESPACE
+  namespace: banka-test
   labels:
     app: activemq
 spec:

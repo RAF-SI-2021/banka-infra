@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: mail-service
-  namespace: NAMESPACE
+  namespace: banka-test
   labels:
     app: mail-service
 spec:
@@ -21,8 +21,8 @@ spec:
           imagePullPolicy: Always
           resources: 
             limits:
-              cpu: "1"
-              memory: 1Gi
+              cpu: "500m"
+              memory: 512Mi
           ports:
             - name: mail-service
               containerPort: 8081
@@ -46,7 +46,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: mail-service
-  namespace: NAMESPACE
+  namespace: banka-test
   labels:
     app: mail-service
 spec:
