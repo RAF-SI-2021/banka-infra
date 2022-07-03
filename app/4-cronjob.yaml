@@ -1,0 +1,23 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: berza-refresh-securities
+spec:
+  schedule: "0/15 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: berza-refresh-securities
+            image: docker.io/curlimages/curl:7.83.1
+            imagePullPolicy: IfNotPresent
+            command:
+            - /bin/sh
+            - -c
+            args:
+              - |-
+                curl http://berza-service:8082/api/akcije/podaci
+                curl http://berza-service:8082/api/forex/podaci
+                curl http://berza-service:8082/api/futures/podaci
+          restartPolicy: OnFailure
