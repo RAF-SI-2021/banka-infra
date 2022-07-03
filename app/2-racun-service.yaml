@@ -27,7 +27,7 @@ spec:
               containerPort: 8083
           env:
             - name: "spring.datasource.hikari.jdbcUrl"
-              value: "jdbc:postgresql://banka-primary:5432/racun"
+              value: "jdbc:postgresql://banka-ha:5432/racun"
             - name: "spring.datasource.hikari.username"
               valueFrom: 
                 secretKeyRef: 
