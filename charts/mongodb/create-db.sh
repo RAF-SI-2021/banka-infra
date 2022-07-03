@@ -7,7 +7,7 @@ NEW_MONGODB_DB="${NEW_MONGODB_DB:-raf}"
 NEW_MONGODB_USER="${NEW_MONGODB_USER:-raf}"
 NEW_MONGODB_USER_PASSWORD="${NEW_MONGODB_USER_PASSWORD:-12345678}"
 
-export MONGODB_ROOT_PASSWORD=$(kubectl get secret --namespace "${NAMESPACE}" mongodb-"${NAMESPACE}"-mongodb-sharded -o jsonpath="{.data.mongodb-root-password}" | base64 -d)
+export MONGODB_ROOT_PASSWORD=$(kubectl get secret --namespace "${NAMESPACE}" mongodb-mongodb-sharded -o jsonpath="{.data.mongodb-root-password}" | base64 -d)
 
 echo "Creating monogo user ${NEW_MONGODB_USER} for database ${NEW_MONGODB_DB}..."
 
