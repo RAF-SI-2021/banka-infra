@@ -19,8 +19,12 @@ spec:
           name: banka-frontend
           imagePullPolicy: Always
           command:
-            - npm
-            - start
+            - /bin/sh
+            - -c
+          args:
+            - |-
+              cp .env.test .env
+              npm start
           resources: 
             limits:
               cpu: "1"
