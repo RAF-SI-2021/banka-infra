@@ -11,4 +11,8 @@ helm repo add influxdata https://helm.influxdata.com || true
 helm repo update
 
 # Install InfluxDB chart
-helm upgrade --install --values ./clusters/elab/influxdb/values.yaml --namespace "${NAMESPACE}" influx influxdata/influxdb2
+helm upgrade \
+    --install \
+    --values ./clusters/elab/influxdb/values.yaml \
+    --namespace "${NAMESPACE}" \
+    influx influxdata/influxdb2

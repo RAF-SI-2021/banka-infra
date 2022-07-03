@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: mail-service
-  namespace: banka-test
   labels:
     app: mail-service
 spec:
@@ -27,13 +26,13 @@ spec:
             - name: mail-service
               containerPort: 8081
           env:
-            - name: "spring.mail.username"
+            - name: "EMAIL_USERNAME"
               valueFrom: 
                 secretKeyRef: 
                   name: email-creds
                   key: username
                   optional: false
-            - name: "spring.mail.password"
+            - name: "EMAIL_PASSWORD"
               valueFrom: 
                 secretKeyRef: 
                   name: email-creds
@@ -46,7 +45,6 @@ apiVersion: v1
 kind: Service
 metadata:
   name: mail-service
-  namespace: banka-test
   labels:
     app: mail-service
 spec:

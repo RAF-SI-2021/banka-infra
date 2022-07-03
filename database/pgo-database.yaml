@@ -2,13 +2,12 @@ apiVersion: postgres-operator.crunchydata.com/v1beta1
 kind: PostgresCluster
 metadata:
   name: banka
-  namespace: banka-test
 spec:
   image: registry.developers.crunchydata.com/crunchydata/crunchy-postgres:ubi8-14.3-0
   postgresVersion: 14
   instances:
     - name: instance1
-      replicas: 1
+      replicas: 3
       dataVolumeClaimSpec:
         accessModes:
         - "ReadWriteOnce"
@@ -37,6 +36,14 @@ spec:
             resources:
               requests:
                 storage: 1Gi
+  proxy:
+    pgBouncer:
+      replicas: 2
+      image: registry.developers.crunchydata.com/crunchydata/crunchy-pgbouncer:ubi8-1.16-3
+      resources:
+        limits:
+          cpu: 200m
+          memory: 128Mi
   users:
     - name: admin
       databases:

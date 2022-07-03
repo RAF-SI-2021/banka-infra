@@ -2,7 +2,6 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: banka-ingress-frontend
-  namespace: banka-test
   annotations:
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
 spec:
@@ -27,7 +26,6 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: banka-ingress-api
-  namespace: banka-test
   annotations:
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
     nginx.ingress.kubernetes.io/rewrite-target: /$2
