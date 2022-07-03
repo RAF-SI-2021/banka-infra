@@ -30,9 +30,7 @@ spec:
     privateKeySecretRef:
       name: letsencrypt-prod-acme-account-key
     solvers:
-    - dns01:
-        digitalocean:
-          tokenSecretRef:
-            name: digitalocean-dns
-            key: access-token
+    - http01:
+        ingress:
+          class: nginx
 EOF

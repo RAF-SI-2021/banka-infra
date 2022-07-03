@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: racun-service
-  namespace: NAMESPACE
   labels:
     app: racun-service
 spec:
@@ -21,14 +20,14 @@ spec:
           imagePullPolicy: Always
           resources: 
             limits:
-              cpu: "1"
-              memory: 1Gi
+              cpu: 700m
+              memory: 700Mi
           ports:
             - name: racun-service
               containerPort: 8083
           env:
             - name: "spring.datasource.hikari.jdbcUrl"
-              value: "jdbc:postgresql://banka-pgbouncer:5432/racun"
+              value: "jdbc:postgresql://banka-primary:5432/racun"
             - name: "spring.datasource.hikari.username"
               valueFrom: 
                 secretKeyRef: 
@@ -43,24 +42,17 @@ spec:
                   optional: false
             - name: "spring.jpa.hibernate.ddl-auto"
               value: "update"
-            - name: "racun.user-service-url"
-              value: "http://user-service:8080/api/limit-change"
-            - name: "racun.user-service-url2"
-              value: "http://user-service:8080/api/user"
-            - name: "racun.forex-quote-url"
-              value: "http://berza-service:8082/api/forex/podaci"
-            - name: "racun.akcije-quote-url"
-              value: "http://berza-service:8082/api/akcije/podaci/id/"
-            - name: "racun.futures-quote-url"
-              value: "http://berza-service:8082/api/futures/podaci/id/"
-            - name: "racun.berzaById-url"
-              value: "http://berza-service:8082/api/berza/id/"
+            - name: "spring.data.mongodb.host"
+              value: "mongodb-banka-test-mongodb-sharded"
+            - name: "racun.user-service-baseurl"
+              value: "http://user-service:8080/"
+            - name: "racun.berza-service-baseurl"
+              value: "http://berza-service:8082/"
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: racun-service
-  namespace: NAMESPACE
   labels:
     app: racun-service
 spec:
