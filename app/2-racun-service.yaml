@@ -43,7 +43,7 @@ spec:
             - name: "spring.jpa.hibernate.ddl-auto"
               value: "update"
             - name: "spring.data.mongodb.host"
-              value: "mongodb-banka-test-mongodb-sharded"
+              value: "mongodb-mongodb-sharded"
             - name: "racun.user-service-baseurl"
               value: "http://user-service:8080/"
             - name: "racun.berza-service-baseurl"
