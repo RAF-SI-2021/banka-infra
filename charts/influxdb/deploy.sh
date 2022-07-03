@@ -13,6 +13,6 @@ helm repo update
 # Install InfluxDB chart
 helm upgrade \
     --install \
-    --values ./clusters/elab/influxdb/values.yaml \
+    --values values.yaml \
     --namespace "${NAMESPACE}" \
     influx influxdata/influxdb2

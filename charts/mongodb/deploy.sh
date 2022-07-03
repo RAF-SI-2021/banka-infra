@@ -12,6 +12,6 @@ helm repo update
 
 # Install MongoDB chart
 helm upgrade --install mongodb bitnami/mongodb-sharded \
-  --values ./clusters/elab/mongodb/values.yaml \
+  --values values.yaml \
   --namespace "${NAMESPACE}" \
   --create-namespace
