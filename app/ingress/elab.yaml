@@ -1,0 +1,51 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: banka-ingress-frontend
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: "banka.k8s.elab.rs"
+    http:
+      paths:
+        - pathType: Prefix
+          path: "/"
+          backend:
+            service:
+              name: frontend
+              port:
+                number: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: banka-ingress-api
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: "banka.k8s.elab.rs"
+    http:
+      paths:
+        - pathType: Prefix
+          path: "/user(/|$)(.*)"
+          backend:
+            service:
+              name: user-service
+              port:
+                number: 8080
+        - pathType: Prefix
+          path: "/berza(/|$)(.*)"
+          backend:
+            service:
+              name: berza-service
+              port:
+                number: 8082
+        - pathType: Prefix
+          path: "/racun(/|$)(.*)"
+          backend:
+            service:
+              name: racun-service
+              port:
+                number: 8083
